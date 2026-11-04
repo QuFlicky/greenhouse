@@ -1,0 +1,2293 @@
+{
+  "passed": true,
+  "checks": [
+    "unsubmitted task query is not_found",
+    "two simultaneous submissions produce one plan; later retry is stable",
+    "simultaneous distinct tasks preserve the station constraint",
+    "malformed requests return structured errors",
+    "task payloads, per-task events, progress boundaries and stable persisted facts agree"
+  ],
+  "limits": "Behavioral samples; not proof of all races, authentication, or physical execution.",
+  "transcript": [
+    {
+      "request": {
+        "op": "get",
+        "job_id": "J0001"
+      },
+      "response": {
+        "status": "not_found"
+      },
+      "duration_s": 0.1737
+    },
+    {
+      "request": {
+        "op": "submit",
+        "job": {
+          "job_id": "J0001",
+          "station_id": "S1",
+          "ready_s": 0
+        }
+      },
+      "response": {
+        "status": "accepted",
+        "run": {
+          "job_id": "J0001",
+          "station_id": "S1",
+          "ready_s": 0,
+          "start_s": 0,
+          "end_s": 40
+        }
+      },
+      "duration_s": 0.1689
+    },
+    {
+      "request": {
+        "op": "submit",
+        "job": {
+          "job_id": "J0001",
+          "station_id": "S1",
+          "ready_s": 0
+        }
+      },
+      "response": {
+        "status": "duplicate",
+        "run": {
+          "job_id": "J0001",
+          "station_id": "S1",
+          "ready_s": 0,
+          "start_s": 0,
+          "end_s": 40
+        }
+      },
+      "duration_s": 0.1721
+    },
+    {
+      "request": {
+        "op": "submit",
+        "job": {
+          "job_id": "J0001",
+          "station_id": "S1",
+          "ready_s": 0
+        }
+      },
+      "response": {
+        "status": "duplicate",
+        "run": {
+          "job_id": "J0001",
+          "station_id": "S1",
+          "ready_s": 0,
+          "start_s": 0,
+          "end_s": 40
+        }
+      },
+      "duration_s": 0.1864
+    },
+    {
+      "request": {
+        "op": "submit",
+        "job": {
+          "job_id": "J0001",
+          "station_id": "S1",
+          "ready_s": 1
+        }
+      },
+      "response": {
+        "status": "conflict",
+        "code": "payload_conflict",
+        "message": "job_id has different parameters"
+      },
+      "duration_s": 0.2157
+    },
+    {
+      "request": {
+        "op": "submit",
+        "job": {
+          "job_id": "J0003",
+          "station_id": "S1",
+          "ready_s": 0
+        }
+      },
+      "response": {
+        "status": "accepted",
+        "run": {
+          "job_id": "J0003",
+          "station_id": "S1",
+          "ready_s": 0,
+          "start_s": 40,
+          "end_s": 80
+        }
+      },
+      "duration_s": 0.1885
+    },
+    {
+      "request": {
+        "op": "submit",
+        "job": {
+          "job_id": "J0005",
+          "station_id": "S1",
+          "ready_s": 0
+        }
+      },
+      "response": {
+        "status": "accepted",
+        "run": {
+          "job_id": "J0005",
+          "station_id": "S1",
+          "ready_s": 0,
+          "start_s": 80,
+          "end_s": 120
+        }
+      },
+      "duration_s": 0.1968
+    },
+    {
+      "request": [],
+      "response": {
+        "status": "error",
+        "code": "invalid_request",
+        "message": "request must be an object"
+      },
+      "duration_s": 0.1579
+    },
+    {
+      "request": {
+        "op": "bad"
+      },
+      "response": {
+        "status": "error",
+        "code": "invalid_operation",
+        "message": "op must be submit, get or report"
+      },
+      "duration_s": 0.1898
+    },
+    {
+      "request": {
+        "op": "submit",
+        "job": {
+          "job_id": "J0001",
+          "station_id": "S1",
+          "ready_s": -1
+        }
+      },
+      "response": {
+        "status": "error",
+        "code": "invalid_time",
+        "message": "ready_s must be an integer in [0, 9223372036854775807]"
+      },
+      "duration_s": 0.1654
+    },
+    {
+      "request": {
+        "op": "report",
+        "at_s": 0
+      },
+      "response": {
+        "status": "ok",
+        "record_kind": "virtual_plan_and_replay",
+        "runs": [
+          {
+            "job_id": "J0001",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 0,
+            "end_s": 40
+          },
+          {
+            "job_id": "J0003",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 40,
+            "end_s": 80
+          },
+          {
+            "job_id": "J0005",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 80,
+            "end_s": 120
+          }
+        ],
+        "events": [
+          {
+            "seq": 1,
+            "job_id": "J0001",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 2,
+            "job_id": "J0001",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [],
+              "reason": "ready",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 40,
+                "job_id": "J0001",
+                "ready_s": 0,
+                "start_s": 0,
+                "station_id": "S1"
+              },
+              "wait_s": 0
+            }
+          },
+          {
+            "seq": 3,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 4,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 5,
+            "job_id": "J0001",
+            "event": "conflict",
+            "detail": {
+              "expected": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              },
+              "submitted": {
+                "job_id": "J0001",
+                "ready_s": 1,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 6,
+            "job_id": "J0003",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0003",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 7,
+            "job_id": "J0003",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 80,
+                "job_id": "J0003",
+                "ready_s": 0,
+                "start_s": 40,
+                "station_id": "S1"
+              },
+              "wait_s": 40
+            }
+          },
+          {
+            "seq": 8,
+            "job_id": "J0005",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0005",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 9,
+            "job_id": "J0005",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001",
+                "J0003"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 120,
+                "job_id": "J0005",
+                "ready_s": 0,
+                "start_s": 80,
+                "station_id": "S1"
+              },
+              "wait_s": 80
+            }
+          }
+        ],
+        "metrics": {
+          "planned_count": 3,
+          "simulated_completed_count": 0,
+          "at_s": 0,
+          "event_counts": {
+            "accepted": 3,
+            "planned": 3,
+            "duplicate": 2,
+            "conflict": 1
+          }
+        }
+      },
+      "duration_s": 0.1828
+    },
+    {
+      "request": {
+        "op": "get",
+        "job_id": "J0001",
+        "at_s": 0
+      },
+      "response": {
+        "status": "ok",
+        "state": "running",
+        "run": {
+          "job_id": "J0001",
+          "station_id": "S1",
+          "ready_s": 0,
+          "start_s": 0,
+          "end_s": 40
+        },
+        "wait": {
+          "wait_s": 0
+        },
+        "events": [
+          {
+            "seq": 1,
+            "job_id": "J0001",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 2,
+            "job_id": "J0001",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [],
+              "reason": "ready",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 40,
+                "job_id": "J0001",
+                "ready_s": 0,
+                "start_s": 0,
+                "station_id": "S1"
+              },
+              "wait_s": 0
+            }
+          },
+          {
+            "seq": 3,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 4,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 5,
+            "job_id": "J0001",
+            "event": "conflict",
+            "detail": {
+              "expected": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              },
+              "submitted": {
+                "job_id": "J0001",
+                "ready_s": 1,
+                "station_id": "S1"
+              }
+            }
+          }
+        ]
+      },
+      "duration_s": 0.2087
+    },
+    {
+      "request": {
+        "op": "get",
+        "job_id": "J0001",
+        "at_s": 39
+      },
+      "response": {
+        "status": "ok",
+        "state": "running",
+        "run": {
+          "job_id": "J0001",
+          "station_id": "S1",
+          "ready_s": 0,
+          "start_s": 0,
+          "end_s": 40
+        },
+        "wait": {
+          "wait_s": 0
+        },
+        "events": [
+          {
+            "seq": 1,
+            "job_id": "J0001",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 2,
+            "job_id": "J0001",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [],
+              "reason": "ready",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 40,
+                "job_id": "J0001",
+                "ready_s": 0,
+                "start_s": 0,
+                "station_id": "S1"
+              },
+              "wait_s": 0
+            }
+          },
+          {
+            "seq": 3,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 4,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 5,
+            "job_id": "J0001",
+            "event": "conflict",
+            "detail": {
+              "expected": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              },
+              "submitted": {
+                "job_id": "J0001",
+                "ready_s": 1,
+                "station_id": "S1"
+              }
+            }
+          }
+        ]
+      },
+      "duration_s": 0.1494
+    },
+    {
+      "request": {
+        "op": "get",
+        "job_id": "J0001",
+        "at_s": 40
+      },
+      "response": {
+        "status": "ok",
+        "state": "simulated_completed",
+        "run": {
+          "job_id": "J0001",
+          "station_id": "S1",
+          "ready_s": 0,
+          "start_s": 0,
+          "end_s": 40
+        },
+        "wait": {
+          "wait_s": 0
+        },
+        "events": [
+          {
+            "seq": 1,
+            "job_id": "J0001",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 2,
+            "job_id": "J0001",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [],
+              "reason": "ready",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 40,
+                "job_id": "J0001",
+                "ready_s": 0,
+                "start_s": 0,
+                "station_id": "S1"
+              },
+              "wait_s": 0
+            }
+          },
+          {
+            "seq": 3,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 4,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 5,
+            "job_id": "J0001",
+            "event": "conflict",
+            "detail": {
+              "expected": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              },
+              "submitted": {
+                "job_id": "J0001",
+                "ready_s": 1,
+                "station_id": "S1"
+              }
+            }
+          }
+        ]
+      },
+      "duration_s": 0.1708
+    },
+    {
+      "request": {
+        "op": "get",
+        "job_id": "J0003",
+        "at_s": 0
+      },
+      "response": {
+        "status": "ok",
+        "state": "waiting",
+        "run": {
+          "job_id": "J0003",
+          "station_id": "S1",
+          "ready_s": 0,
+          "start_s": 40,
+          "end_s": 80
+        },
+        "wait": {
+          "wait_s": 40
+        },
+        "events": [
+          {
+            "seq": 6,
+            "job_id": "J0003",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0003",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 7,
+            "job_id": "J0003",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 80,
+                "job_id": "J0003",
+                "ready_s": 0,
+                "start_s": 40,
+                "station_id": "S1"
+              },
+              "wait_s": 40
+            }
+          }
+        ]
+      },
+      "duration_s": 0.1615
+    },
+    {
+      "request": {
+        "op": "get",
+        "job_id": "J0003",
+        "at_s": 40
+      },
+      "response": {
+        "status": "ok",
+        "state": "running",
+        "run": {
+          "job_id": "J0003",
+          "station_id": "S1",
+          "ready_s": 0,
+          "start_s": 40,
+          "end_s": 80
+        },
+        "wait": {
+          "wait_s": 40
+        },
+        "events": [
+          {
+            "seq": 6,
+            "job_id": "J0003",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0003",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 7,
+            "job_id": "J0003",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 80,
+                "job_id": "J0003",
+                "ready_s": 0,
+                "start_s": 40,
+                "station_id": "S1"
+              },
+              "wait_s": 40
+            }
+          }
+        ]
+      },
+      "duration_s": 0.1705
+    },
+    {
+      "request": {
+        "op": "get",
+        "job_id": "J0003",
+        "at_s": 79
+      },
+      "response": {
+        "status": "ok",
+        "state": "running",
+        "run": {
+          "job_id": "J0003",
+          "station_id": "S1",
+          "ready_s": 0,
+          "start_s": 40,
+          "end_s": 80
+        },
+        "wait": {
+          "wait_s": 40
+        },
+        "events": [
+          {
+            "seq": 6,
+            "job_id": "J0003",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0003",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 7,
+            "job_id": "J0003",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 80,
+                "job_id": "J0003",
+                "ready_s": 0,
+                "start_s": 40,
+                "station_id": "S1"
+              },
+              "wait_s": 40
+            }
+          }
+        ]
+      },
+      "duration_s": 0.1501
+    },
+    {
+      "request": {
+        "op": "get",
+        "job_id": "J0003",
+        "at_s": 80
+      },
+      "response": {
+        "status": "ok",
+        "state": "simulated_completed",
+        "run": {
+          "job_id": "J0003",
+          "station_id": "S1",
+          "ready_s": 0,
+          "start_s": 40,
+          "end_s": 80
+        },
+        "wait": {
+          "wait_s": 40
+        },
+        "events": [
+          {
+            "seq": 6,
+            "job_id": "J0003",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0003",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 7,
+            "job_id": "J0003",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 80,
+                "job_id": "J0003",
+                "ready_s": 0,
+                "start_s": 40,
+                "station_id": "S1"
+              },
+              "wait_s": 40
+            }
+          }
+        ]
+      },
+      "duration_s": 0.1814
+    },
+    {
+      "request": {
+        "op": "get",
+        "job_id": "J0005",
+        "at_s": 0
+      },
+      "response": {
+        "status": "ok",
+        "state": "waiting",
+        "run": {
+          "job_id": "J0005",
+          "station_id": "S1",
+          "ready_s": 0,
+          "start_s": 80,
+          "end_s": 120
+        },
+        "wait": {
+          "wait_s": 80
+        },
+        "events": [
+          {
+            "seq": 8,
+            "job_id": "J0005",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0005",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 9,
+            "job_id": "J0005",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001",
+                "J0003"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 120,
+                "job_id": "J0005",
+                "ready_s": 0,
+                "start_s": 80,
+                "station_id": "S1"
+              },
+              "wait_s": 80
+            }
+          }
+        ]
+      },
+      "duration_s": 0.154
+    },
+    {
+      "request": {
+        "op": "get",
+        "job_id": "J0005",
+        "at_s": 80
+      },
+      "response": {
+        "status": "ok",
+        "state": "running",
+        "run": {
+          "job_id": "J0005",
+          "station_id": "S1",
+          "ready_s": 0,
+          "start_s": 80,
+          "end_s": 120
+        },
+        "wait": {
+          "wait_s": 80
+        },
+        "events": [
+          {
+            "seq": 8,
+            "job_id": "J0005",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0005",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 9,
+            "job_id": "J0005",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001",
+                "J0003"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 120,
+                "job_id": "J0005",
+                "ready_s": 0,
+                "start_s": 80,
+                "station_id": "S1"
+              },
+              "wait_s": 80
+            }
+          }
+        ]
+      },
+      "duration_s": 0.1692
+    },
+    {
+      "request": {
+        "op": "get",
+        "job_id": "J0005",
+        "at_s": 119
+      },
+      "response": {
+        "status": "ok",
+        "state": "running",
+        "run": {
+          "job_id": "J0005",
+          "station_id": "S1",
+          "ready_s": 0,
+          "start_s": 80,
+          "end_s": 120
+        },
+        "wait": {
+          "wait_s": 80
+        },
+        "events": [
+          {
+            "seq": 8,
+            "job_id": "J0005",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0005",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 9,
+            "job_id": "J0005",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001",
+                "J0003"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 120,
+                "job_id": "J0005",
+                "ready_s": 0,
+                "start_s": 80,
+                "station_id": "S1"
+              },
+              "wait_s": 80
+            }
+          }
+        ]
+      },
+      "duration_s": 0.1491
+    },
+    {
+      "request": {
+        "op": "get",
+        "job_id": "J0005",
+        "at_s": 120
+      },
+      "response": {
+        "status": "ok",
+        "state": "simulated_completed",
+        "run": {
+          "job_id": "J0005",
+          "station_id": "S1",
+          "ready_s": 0,
+          "start_s": 80,
+          "end_s": 120
+        },
+        "wait": {
+          "wait_s": 80
+        },
+        "events": [
+          {
+            "seq": 8,
+            "job_id": "J0005",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0005",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 9,
+            "job_id": "J0005",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001",
+                "J0003"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 120,
+                "job_id": "J0005",
+                "ready_s": 0,
+                "start_s": 80,
+                "station_id": "S1"
+              },
+              "wait_s": 80
+            }
+          }
+        ]
+      },
+      "duration_s": 0.1748
+    },
+    {
+      "request": {
+        "op": "report",
+        "at_s": 0
+      },
+      "response": {
+        "status": "ok",
+        "record_kind": "virtual_plan_and_replay",
+        "runs": [
+          {
+            "job_id": "J0001",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 0,
+            "end_s": 40
+          },
+          {
+            "job_id": "J0003",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 40,
+            "end_s": 80
+          },
+          {
+            "job_id": "J0005",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 80,
+            "end_s": 120
+          }
+        ],
+        "events": [
+          {
+            "seq": 1,
+            "job_id": "J0001",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 2,
+            "job_id": "J0001",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [],
+              "reason": "ready",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 40,
+                "job_id": "J0001",
+                "ready_s": 0,
+                "start_s": 0,
+                "station_id": "S1"
+              },
+              "wait_s": 0
+            }
+          },
+          {
+            "seq": 3,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 4,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 5,
+            "job_id": "J0001",
+            "event": "conflict",
+            "detail": {
+              "expected": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              },
+              "submitted": {
+                "job_id": "J0001",
+                "ready_s": 1,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 6,
+            "job_id": "J0003",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0003",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 7,
+            "job_id": "J0003",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 80,
+                "job_id": "J0003",
+                "ready_s": 0,
+                "start_s": 40,
+                "station_id": "S1"
+              },
+              "wait_s": 40
+            }
+          },
+          {
+            "seq": 8,
+            "job_id": "J0005",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0005",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 9,
+            "job_id": "J0005",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001",
+                "J0003"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 120,
+                "job_id": "J0005",
+                "ready_s": 0,
+                "start_s": 80,
+                "station_id": "S1"
+              },
+              "wait_s": 80
+            }
+          }
+        ],
+        "metrics": {
+          "planned_count": 3,
+          "simulated_completed_count": 0,
+          "at_s": 0,
+          "event_counts": {
+            "accepted": 3,
+            "planned": 3,
+            "duplicate": 2,
+            "conflict": 1
+          }
+        }
+      },
+      "duration_s": 0.15
+    },
+    {
+      "request": {
+        "op": "report",
+        "at_s": 39
+      },
+      "response": {
+        "status": "ok",
+        "record_kind": "virtual_plan_and_replay",
+        "runs": [
+          {
+            "job_id": "J0001",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 0,
+            "end_s": 40
+          },
+          {
+            "job_id": "J0003",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 40,
+            "end_s": 80
+          },
+          {
+            "job_id": "J0005",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 80,
+            "end_s": 120
+          }
+        ],
+        "events": [
+          {
+            "seq": 1,
+            "job_id": "J0001",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 2,
+            "job_id": "J0001",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [],
+              "reason": "ready",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 40,
+                "job_id": "J0001",
+                "ready_s": 0,
+                "start_s": 0,
+                "station_id": "S1"
+              },
+              "wait_s": 0
+            }
+          },
+          {
+            "seq": 3,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 4,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 5,
+            "job_id": "J0001",
+            "event": "conflict",
+            "detail": {
+              "expected": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              },
+              "submitted": {
+                "job_id": "J0001",
+                "ready_s": 1,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 6,
+            "job_id": "J0003",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0003",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 7,
+            "job_id": "J0003",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 80,
+                "job_id": "J0003",
+                "ready_s": 0,
+                "start_s": 40,
+                "station_id": "S1"
+              },
+              "wait_s": 40
+            }
+          },
+          {
+            "seq": 8,
+            "job_id": "J0005",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0005",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 9,
+            "job_id": "J0005",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001",
+                "J0003"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 120,
+                "job_id": "J0005",
+                "ready_s": 0,
+                "start_s": 80,
+                "station_id": "S1"
+              },
+              "wait_s": 80
+            }
+          }
+        ],
+        "metrics": {
+          "planned_count": 3,
+          "simulated_completed_count": 0,
+          "at_s": 39,
+          "event_counts": {
+            "accepted": 3,
+            "planned": 3,
+            "duplicate": 2,
+            "conflict": 1
+          }
+        }
+      },
+      "duration_s": 0.1717
+    },
+    {
+      "request": {
+        "op": "report",
+        "at_s": 40
+      },
+      "response": {
+        "status": "ok",
+        "record_kind": "virtual_plan_and_replay",
+        "runs": [
+          {
+            "job_id": "J0001",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 0,
+            "end_s": 40
+          },
+          {
+            "job_id": "J0003",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 40,
+            "end_s": 80
+          },
+          {
+            "job_id": "J0005",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 80,
+            "end_s": 120
+          }
+        ],
+        "events": [
+          {
+            "seq": 1,
+            "job_id": "J0001",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 2,
+            "job_id": "J0001",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [],
+              "reason": "ready",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 40,
+                "job_id": "J0001",
+                "ready_s": 0,
+                "start_s": 0,
+                "station_id": "S1"
+              },
+              "wait_s": 0
+            }
+          },
+          {
+            "seq": 3,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 4,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 5,
+            "job_id": "J0001",
+            "event": "conflict",
+            "detail": {
+              "expected": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              },
+              "submitted": {
+                "job_id": "J0001",
+                "ready_s": 1,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 6,
+            "job_id": "J0003",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0003",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 7,
+            "job_id": "J0003",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 80,
+                "job_id": "J0003",
+                "ready_s": 0,
+                "start_s": 40,
+                "station_id": "S1"
+              },
+              "wait_s": 40
+            }
+          },
+          {
+            "seq": 8,
+            "job_id": "J0005",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0005",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 9,
+            "job_id": "J0005",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001",
+                "J0003"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 120,
+                "job_id": "J0005",
+                "ready_s": 0,
+                "start_s": 80,
+                "station_id": "S1"
+              },
+              "wait_s": 80
+            }
+          }
+        ],
+        "metrics": {
+          "planned_count": 3,
+          "simulated_completed_count": 1,
+          "at_s": 40,
+          "event_counts": {
+            "accepted": 3,
+            "planned": 3,
+            "duplicate": 2,
+            "conflict": 1
+          }
+        }
+      },
+      "duration_s": 0.1748
+    },
+    {
+      "request": {
+        "op": "report",
+        "at_s": 79
+      },
+      "response": {
+        "status": "ok",
+        "record_kind": "virtual_plan_and_replay",
+        "runs": [
+          {
+            "job_id": "J0001",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 0,
+            "end_s": 40
+          },
+          {
+            "job_id": "J0003",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 40,
+            "end_s": 80
+          },
+          {
+            "job_id": "J0005",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 80,
+            "end_s": 120
+          }
+        ],
+        "events": [
+          {
+            "seq": 1,
+            "job_id": "J0001",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 2,
+            "job_id": "J0001",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [],
+              "reason": "ready",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 40,
+                "job_id": "J0001",
+                "ready_s": 0,
+                "start_s": 0,
+                "station_id": "S1"
+              },
+              "wait_s": 0
+            }
+          },
+          {
+            "seq": 3,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 4,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 5,
+            "job_id": "J0001",
+            "event": "conflict",
+            "detail": {
+              "expected": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              },
+              "submitted": {
+                "job_id": "J0001",
+                "ready_s": 1,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 6,
+            "job_id": "J0003",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0003",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 7,
+            "job_id": "J0003",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 80,
+                "job_id": "J0003",
+                "ready_s": 0,
+                "start_s": 40,
+                "station_id": "S1"
+              },
+              "wait_s": 40
+            }
+          },
+          {
+            "seq": 8,
+            "job_id": "J0005",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0005",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 9,
+            "job_id": "J0005",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001",
+                "J0003"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 120,
+                "job_id": "J0005",
+                "ready_s": 0,
+                "start_s": 80,
+                "station_id": "S1"
+              },
+              "wait_s": 80
+            }
+          }
+        ],
+        "metrics": {
+          "planned_count": 3,
+          "simulated_completed_count": 1,
+          "at_s": 79,
+          "event_counts": {
+            "accepted": 3,
+            "planned": 3,
+            "duplicate": 2,
+            "conflict": 1
+          }
+        }
+      },
+      "duration_s": 0.1725
+    },
+    {
+      "request": {
+        "op": "report",
+        "at_s": 80
+      },
+      "response": {
+        "status": "ok",
+        "record_kind": "virtual_plan_and_replay",
+        "runs": [
+          {
+            "job_id": "J0001",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 0,
+            "end_s": 40
+          },
+          {
+            "job_id": "J0003",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 40,
+            "end_s": 80
+          },
+          {
+            "job_id": "J0005",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 80,
+            "end_s": 120
+          }
+        ],
+        "events": [
+          {
+            "seq": 1,
+            "job_id": "J0001",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 2,
+            "job_id": "J0001",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [],
+              "reason": "ready",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 40,
+                "job_id": "J0001",
+                "ready_s": 0,
+                "start_s": 0,
+                "station_id": "S1"
+              },
+              "wait_s": 0
+            }
+          },
+          {
+            "seq": 3,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 4,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 5,
+            "job_id": "J0001",
+            "event": "conflict",
+            "detail": {
+              "expected": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              },
+              "submitted": {
+                "job_id": "J0001",
+                "ready_s": 1,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 6,
+            "job_id": "J0003",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0003",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 7,
+            "job_id": "J0003",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 80,
+                "job_id": "J0003",
+                "ready_s": 0,
+                "start_s": 40,
+                "station_id": "S1"
+              },
+              "wait_s": 40
+            }
+          },
+          {
+            "seq": 8,
+            "job_id": "J0005",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0005",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 9,
+            "job_id": "J0005",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001",
+                "J0003"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 120,
+                "job_id": "J0005",
+                "ready_s": 0,
+                "start_s": 80,
+                "station_id": "S1"
+              },
+              "wait_s": 80
+            }
+          }
+        ],
+        "metrics": {
+          "planned_count": 3,
+          "simulated_completed_count": 2,
+          "at_s": 80,
+          "event_counts": {
+            "accepted": 3,
+            "planned": 3,
+            "duplicate": 2,
+            "conflict": 1
+          }
+        }
+      },
+      "duration_s": 0.1857
+    },
+    {
+      "request": {
+        "op": "report",
+        "at_s": 119
+      },
+      "response": {
+        "status": "ok",
+        "record_kind": "virtual_plan_and_replay",
+        "runs": [
+          {
+            "job_id": "J0001",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 0,
+            "end_s": 40
+          },
+          {
+            "job_id": "J0003",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 40,
+            "end_s": 80
+          },
+          {
+            "job_id": "J0005",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 80,
+            "end_s": 120
+          }
+        ],
+        "events": [
+          {
+            "seq": 1,
+            "job_id": "J0001",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 2,
+            "job_id": "J0001",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [],
+              "reason": "ready",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 40,
+                "job_id": "J0001",
+                "ready_s": 0,
+                "start_s": 0,
+                "station_id": "S1"
+              },
+              "wait_s": 0
+            }
+          },
+          {
+            "seq": 3,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 4,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 5,
+            "job_id": "J0001",
+            "event": "conflict",
+            "detail": {
+              "expected": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              },
+              "submitted": {
+                "job_id": "J0001",
+                "ready_s": 1,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 6,
+            "job_id": "J0003",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0003",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 7,
+            "job_id": "J0003",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 80,
+                "job_id": "J0003",
+                "ready_s": 0,
+                "start_s": 40,
+                "station_id": "S1"
+              },
+              "wait_s": 40
+            }
+          },
+          {
+            "seq": 8,
+            "job_id": "J0005",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0005",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 9,
+            "job_id": "J0005",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001",
+                "J0003"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 120,
+                "job_id": "J0005",
+                "ready_s": 0,
+                "start_s": 80,
+                "station_id": "S1"
+              },
+              "wait_s": 80
+            }
+          }
+        ],
+        "metrics": {
+          "planned_count": 3,
+          "simulated_completed_count": 2,
+          "at_s": 119,
+          "event_counts": {
+            "accepted": 3,
+            "planned": 3,
+            "duplicate": 2,
+            "conflict": 1
+          }
+        }
+      },
+      "duration_s": 0.1916
+    },
+    {
+      "request": {
+        "op": "report",
+        "at_s": 120
+      },
+      "response": {
+        "status": "ok",
+        "record_kind": "virtual_plan_and_replay",
+        "runs": [
+          {
+            "job_id": "J0001",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 0,
+            "end_s": 40
+          },
+          {
+            "job_id": "J0003",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 40,
+            "end_s": 80
+          },
+          {
+            "job_id": "J0005",
+            "station_id": "S1",
+            "ready_s": 0,
+            "start_s": 80,
+            "end_s": 120
+          }
+        ],
+        "events": [
+          {
+            "seq": 1,
+            "job_id": "J0001",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 2,
+            "job_id": "J0001",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [],
+              "reason": "ready",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 40,
+                "job_id": "J0001",
+                "ready_s": 0,
+                "start_s": 0,
+                "station_id": "S1"
+              },
+              "wait_s": 0
+            }
+          },
+          {
+            "seq": 3,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 4,
+            "job_id": "J0001",
+            "event": "duplicate",
+            "detail": {
+              "reason": "identical payload; original plan retained"
+            }
+          },
+          {
+            "seq": 5,
+            "job_id": "J0001",
+            "event": "conflict",
+            "detail": {
+              "expected": {
+                "job_id": "J0001",
+                "ready_s": 0,
+                "station_id": "S1"
+              },
+              "submitted": {
+                "job_id": "J0001",
+                "ready_s": 1,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 6,
+            "job_id": "J0003",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0003",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 7,
+            "job_id": "J0003",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 80,
+                "job_id": "J0003",
+                "ready_s": 0,
+                "start_s": 40,
+                "station_id": "S1"
+              },
+              "wait_s": 40
+            }
+          },
+          {
+            "seq": 8,
+            "job_id": "J0005",
+            "event": "accepted",
+            "detail": {
+              "payload": {
+                "job_id": "J0005",
+                "ready_s": 0,
+                "station_id": "S1"
+              }
+            }
+          },
+          {
+            "seq": 9,
+            "job_id": "J0005",
+            "event": "planned",
+            "detail": {
+              "blocking_job_ids": [
+                "J0001",
+                "J0003"
+              ],
+              "reason": "station_reservations",
+              "record_kind": "virtual_plan",
+              "run": {
+                "end_s": 120,
+                "job_id": "J0005",
+                "ready_s": 0,
+                "start_s": 80,
+                "station_id": "S1"
+              },
+              "wait_s": 80
+            }
+          }
+        ],
+        "metrics": {
+          "planned_count": 3,
+          "simulated_completed_count": 3,
+          "at_s": 120,
+          "event_counts": {
+            "accepted": 3,
+            "planned": 3,
+            "duplicate": 2,
+            "conflict": 1
+          }
+        }
+      },
+      "duration_s": 0.1595
+    }
+  ]
+}

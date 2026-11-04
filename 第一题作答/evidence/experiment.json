@@ -1,0 +1,241 @@
+{
+  "case": {
+    "deliveries": 252,
+    "unique_jobs": 240,
+    "station_job_counts": {
+      "S1": 120,
+      "S2": 120
+    },
+    "ready_s_values": [
+      0
+    ]
+  },
+  "controlled_change": "Only ExecutionWindowPolicy.earliest scopes MAX(end_s) by station_id; same local bus, facade, repository, input order, cycles, hardware and horizon",
+  "metrics": {
+    "baseline": {
+      "valid": true,
+      "errors": [],
+      "unique_jobs": 240,
+      "planned_jobs": 240,
+      "completed_within_horizon": 90,
+      "horizon_s": 3600,
+      "last_completion_s": 9600,
+      "station_utilization_within_horizon": {
+        "S1": 0.5,
+        "S2": 0.5
+      },
+      "note": "Virtual replay metrics; validation does not grade problem selection or production readiness"
+    },
+    "controlled": {
+      "valid": true,
+      "errors": [],
+      "unique_jobs": 240,
+      "planned_jobs": 240,
+      "completed_within_horizon": 180,
+      "horizon_s": 3600,
+      "last_completion_s": 4800,
+      "station_utilization_within_horizon": {
+        "S1": 1.0,
+        "S2": 1.0
+      },
+      "note": "Virtual replay metrics; validation does not grade problem selection or production readiness"
+    },
+    "result": {
+      "valid": true,
+      "errors": [],
+      "unique_jobs": 240,
+      "planned_jobs": 240,
+      "completed_within_horizon": 180,
+      "horizon_s": 3600,
+      "last_completion_s": 4800,
+      "station_utilization_within_horizon": {
+        "S1": 1.0,
+        "S2": 1.0
+      },
+      "note": "Virtual replay metrics; validation does not grade problem selection or production readiness"
+    },
+    "reimport": {
+      "valid": true,
+      "errors": [],
+      "unique_jobs": 240,
+      "planned_jobs": 240,
+      "completed_within_horizon": 180,
+      "horizon_s": 3600,
+      "last_completion_s": 4800,
+      "station_utilization_within_horizon": {
+        "S1": 1.0,
+        "S2": 1.0
+      },
+      "note": "Virtual replay metrics; validation does not grade problem selection or production readiness"
+    }
+  },
+  "waits": {
+    "baseline": {
+      "total_wait_s": 1147200,
+      "mean_wait_s": 4780,
+      "max_wait_s": 9560,
+      "delay_beyond_ready_and_own_station_tail_s": 9560,
+      "interpretation": "virtual schedule waits, not measured message processing latency; tail comparison assumes this ready-sorted batch"
+    },
+    "controlled": {
+      "total_wait_s": 571200,
+      "mean_wait_s": 2380,
+      "max_wait_s": 4760,
+      "delay_beyond_ready_and_own_station_tail_s": 0,
+      "interpretation": "virtual schedule waits, not measured message processing latency; tail comparison assumes this ready-sorted batch"
+    },
+    "result": {
+      "total_wait_s": 571200,
+      "mean_wait_s": 2380,
+      "max_wait_s": 4760,
+      "delay_beyond_ready_and_own_station_tail_s": 0,
+      "interpretation": "virtual schedule waits, not measured message processing latency; tail comparison assumes this ready-sorted batch"
+    }
+  },
+  "controlled_matches_final": true,
+  "continuation": {
+    "kind": "normal process exit and restart; no injected crash",
+    "counts": [
+      20,
+      240,
+      240
+    ],
+    "old_plans_unchanged": true,
+    "all_plans_unchanged_on_reimport": true,
+    "event_counts": [
+      {
+        "accepted": 20,
+        "planned": 20,
+        "duplicate": 1
+      },
+      {
+        "accepted": 240,
+        "planned": 240,
+        "duplicate": 33
+      },
+      {
+        "accepted": 240,
+        "planned": 240,
+        "duplicate": 285
+      }
+    ]
+  },
+  "dependencies": {
+    "baseline": "Python standard library + SQLite; no network services",
+    "controlled": "same as baseline",
+    "final": "same; adapter starts one local process per request"
+  },
+  "operations": "No service startup. Baseline one batch command; controlled experiment one script; final one batch command, or three commands to demonstrate continuation. Fresh temp DB for each experiment arm; resume arm reuses its DB without deletion.",
+  "commands": [
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题材料\\legacy_backend.py",
+        "--case",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题材料\\case.json",
+        "--db",
+        "C:\\Users\\Windows\\AppData\\Local\\Temp\\assessment-experiment-huzf026q\\baseline.db",
+        "--out",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题作答\\evidence\\baseline.json"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题作答\\backend.py",
+        "--case",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题材料\\case.json",
+        "--db",
+        "C:\\Users\\Windows\\AppData\\Local\\Temp\\assessment-experiment-huzf026q\\resume.db",
+        "--out",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题作答\\evidence\\checkpoint.json",
+        "--max-new",
+        "20"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"planned_count\": 20, \"simulated_completed_count\": 20, \"at_s\": 3600, \"event_counts\": {\"accepted\": 20, \"planned\": 20, \"duplicate\": 1}}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题作答\\backend.py",
+        "--case",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题材料\\case.json",
+        "--db",
+        "C:\\Users\\Windows\\AppData\\Local\\Temp\\assessment-experiment-huzf026q\\resume.db",
+        "--out",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题作答\\evidence\\result.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"planned_count\": 240, \"simulated_completed_count\": 180, \"at_s\": 3600, \"event_counts\": {\"accepted\": 240, \"planned\": 240, \"duplicate\": 33}}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题作答\\backend.py",
+        "--case",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题材料\\case.json",
+        "--db",
+        "C:\\Users\\Windows\\AppData\\Local\\Temp\\assessment-experiment-huzf026q\\resume.db",
+        "--out",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题作答\\evidence\\reimport.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"planned_count\": 240, \"simulated_completed_count\": 180, \"at_s\": 3600, \"event_counts\": {\"accepted\": 240, \"planned\": 240, \"duplicate\": 285}}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题材料\\check_result.py",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题材料\\case.json",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题作答\\evidence\\baseline.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"errors\": [],\n  \"unique_jobs\": 240,\n  \"planned_jobs\": 240,\n  \"completed_within_horizon\": 90,\n  \"horizon_s\": 3600,\n  \"last_completion_s\": 9600,\n  \"station_utilization_within_horizon\": {\n    \"S1\": 0.5,\n    \"S2\": 0.5\n  },\n  \"note\": \"Virtual replay metrics; validation does not grade problem selection or production readiness\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题材料\\check_result.py",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题材料\\case.json",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题作答\\evidence\\controlled.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"errors\": [],\n  \"unique_jobs\": 240,\n  \"planned_jobs\": 240,\n  \"completed_within_horizon\": 180,\n  \"horizon_s\": 3600,\n  \"last_completion_s\": 4800,\n  \"station_utilization_within_horizon\": {\n    \"S1\": 1.0,\n    \"S2\": 1.0\n  },\n  \"note\": \"Virtual replay metrics; validation does not grade problem selection or production readiness\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题材料\\check_result.py",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题材料\\case.json",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题作答\\evidence\\result.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\n  \"valid\": true,\n  \"errors\": [],\n  \"unique_jobs\": 240,\n  \"planned_jobs\": 240,\n  \"completed_within_horizon\": 180,\n  \"horizon_s\": 3600,\n  \"last_completion_s\": 4800,\n  \"station_utilization_within_horizon\": {\n    \"S1\": 1.0,\n    \"S2\": 1.0\n  },\n  \"note\": \"Virtual replay metrics; validation does not grade problem selection or production readiness\"\n}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "C:\\Python314\\python.exe",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题材料\\check_platform.py",
+        "--adapter",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题作答\\adapter.json",
+        "--case",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题材料\\case.json",
+        "--out",
+        "C:\\Users\\Windows\\Documents\\ChatGPT\\backend-online-assessment-2026-main\\第一题作答\\evidence\\platform_evidence.json"
+      ],
+      "exit_code": 0,
+      "stdout": "{\"passed\": true, \"checks\": [\"unsubmitted task query is not_found\", \"two simultaneous submissions produce one plan; later retry is stable\", \"simultaneous distinct tasks preserve the station constraint\", \"malformed requests return structured errors\", \"task payloads, per-task events, progress boundaries and stable persisted facts agree\"], \"limits\": \"Behavioral samples; not proof of all races, authentication, or physical execution.\"}\n",
+      "stderr": ""
+    }
+  ]
+}

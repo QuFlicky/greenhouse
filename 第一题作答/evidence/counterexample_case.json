@@ -1,0 +1,20 @@
+{
+  "report_horizon_s": 3600,
+  "stations": {
+    "S1": {
+      "cycle_s": 40
+    }
+  },
+  "jobs": [
+    {
+      "job_id": "late",
+      "station_id": "S1",
+      "ready_s": 1000
+    },
+    {
+      "job_id": "early",
+      "station_id": "S1",
+      "ready_s": 0
+    }
+  ]
+}

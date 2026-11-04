@@ -1,0 +1,14 @@
+{
+  "valid": true,
+  "errors": [],
+  "unique_jobs": 240,
+  "planned_jobs": 240,
+  "completed_within_horizon": 90,
+  "horizon_s": 3600,
+  "last_completion_s": 9600,
+  "station_utilization_within_horizon": {
+    "S1": 0.5,
+    "S2": 0.5
+  },
+  "note": "Virtual replay metrics; validation does not grade problem selection or production readiness"
+}

@@ -1,0 +1,91 @@
+{
+  "status": "ok",
+  "record_kind": "virtual_plan_and_replay",
+  "runs": [
+    {
+      "job_id": "early",
+      "station_id": "S1",
+      "ready_s": 0,
+      "start_s": 0,
+      "end_s": 40
+    },
+    {
+      "job_id": "late",
+      "station_id": "S1",
+      "ready_s": 1000,
+      "start_s": 1000,
+      "end_s": 1040
+    }
+  ],
+  "events": [
+    {
+      "seq": 1,
+      "job_id": "late",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "late",
+          "ready_s": 1000,
+          "station_id": "S1"
+        }
+      }
+    },
+    {
+      "seq": 2,
+      "job_id": "late",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [],
+        "reason": "ready",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 1040,
+          "job_id": "late",
+          "ready_s": 1000,
+          "start_s": 1000,
+          "station_id": "S1"
+        },
+        "wait_s": 0
+      }
+    },
+    {
+      "seq": 3,
+      "job_id": "early",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "early",
+          "ready_s": 0,
+          "station_id": "S1"
+        }
+      }
+    },
+    {
+      "seq": 4,
+      "job_id": "early",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [],
+        "reason": "ready",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 40,
+          "job_id": "early",
+          "ready_s": 0,
+          "start_s": 0,
+          "station_id": "S1"
+        },
+        "wait_s": 0
+      }
+    }
+  ],
+  "metrics": {
+    "planned_count": 2,
+    "simulated_completed_count": 2,
+    "at_s": 3600,
+    "event_counts": {
+      "accepted": 2,
+      "planned": 2
+    }
+  }
+}

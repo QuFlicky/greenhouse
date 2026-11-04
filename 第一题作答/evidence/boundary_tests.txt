@@ -1,0 +1,11 @@
+test_case_binding_rejects_changes (test_backend.Boundaries.test_case_binding_rejects_changes) ... ok
+test_conflict_before_acceptance_and_unknown_job (test_backend.Boundaries.test_conflict_before_acceptance_and_unknown_job) ... ok
+test_gap_and_state_boundaries (test_backend.Boundaries.test_gap_and_state_boundaries) ... ok
+test_input_case_conflict_and_integer_limits (test_backend.Boundaries.test_input_case_conflict_and_integer_limits) ... ok
+test_invalid_times_and_shapes_do_not_write_events (test_backend.Boundaries.test_invalid_times_and_shapes_do_not_write_events) ... ok
+test_reservation_overflow_rolls_back_and_max_end_is_valid (test_backend.Boundaries.test_reservation_overflow_rolls_back_and_max_end_is_valid) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.142s
+
+OK

@@ -1,0 +1,874 @@
+{
+  "status": "ok",
+  "record_kind": "virtual_plan_and_replay",
+  "runs": [
+    {
+      "job_id": "J0001",
+      "station_id": "S1",
+      "ready_s": 0,
+      "start_s": 0,
+      "end_s": 40
+    },
+    {
+      "job_id": "J0002",
+      "station_id": "S2",
+      "ready_s": 0,
+      "start_s": 0,
+      "end_s": 40
+    },
+    {
+      "job_id": "J0003",
+      "station_id": "S1",
+      "ready_s": 0,
+      "start_s": 40,
+      "end_s": 80
+    },
+    {
+      "job_id": "J0004",
+      "station_id": "S2",
+      "ready_s": 0,
+      "start_s": 40,
+      "end_s": 80
+    },
+    {
+      "job_id": "J0005",
+      "station_id": "S1",
+      "ready_s": 0,
+      "start_s": 80,
+      "end_s": 120
+    },
+    {
+      "job_id": "J0006",
+      "station_id": "S2",
+      "ready_s": 0,
+      "start_s": 80,
+      "end_s": 120
+    },
+    {
+      "job_id": "J0007",
+      "station_id": "S1",
+      "ready_s": 0,
+      "start_s": 120,
+      "end_s": 160
+    },
+    {
+      "job_id": "J0008",
+      "station_id": "S2",
+      "ready_s": 0,
+      "start_s": 120,
+      "end_s": 160
+    },
+    {
+      "job_id": "J0009",
+      "station_id": "S1",
+      "ready_s": 0,
+      "start_s": 160,
+      "end_s": 200
+    },
+    {
+      "job_id": "J0010",
+      "station_id": "S2",
+      "ready_s": 0,
+      "start_s": 160,
+      "end_s": 200
+    },
+    {
+      "job_id": "J0011",
+      "station_id": "S1",
+      "ready_s": 0,
+      "start_s": 200,
+      "end_s": 240
+    },
+    {
+      "job_id": "J0012",
+      "station_id": "S2",
+      "ready_s": 0,
+      "start_s": 200,
+      "end_s": 240
+    },
+    {
+      "job_id": "J0013",
+      "station_id": "S1",
+      "ready_s": 0,
+      "start_s": 240,
+      "end_s": 280
+    },
+    {
+      "job_id": "J0014",
+      "station_id": "S2",
+      "ready_s": 0,
+      "start_s": 240,
+      "end_s": 280
+    },
+    {
+      "job_id": "J0015",
+      "station_id": "S1",
+      "ready_s": 0,
+      "start_s": 280,
+      "end_s": 320
+    },
+    {
+      "job_id": "J0016",
+      "station_id": "S2",
+      "ready_s": 0,
+      "start_s": 280,
+      "end_s": 320
+    },
+    {
+      "job_id": "J0017",
+      "station_id": "S1",
+      "ready_s": 0,
+      "start_s": 320,
+      "end_s": 360
+    },
+    {
+      "job_id": "J0018",
+      "station_id": "S2",
+      "ready_s": 0,
+      "start_s": 320,
+      "end_s": 360
+    },
+    {
+      "job_id": "J0019",
+      "station_id": "S1",
+      "ready_s": 0,
+      "start_s": 360,
+      "end_s": 400
+    },
+    {
+      "job_id": "J0020",
+      "station_id": "S2",
+      "ready_s": 0,
+      "start_s": 360,
+      "end_s": 400
+    }
+  ],
+  "events": [
+    {
+      "seq": 1,
+      "job_id": "J0001",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0001",
+          "ready_s": 0,
+          "station_id": "S1"
+        }
+      }
+    },
+    {
+      "seq": 2,
+      "job_id": "J0001",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [],
+        "reason": "ready",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 40,
+          "job_id": "J0001",
+          "ready_s": 0,
+          "start_s": 0,
+          "station_id": "S1"
+        },
+        "wait_s": 0
+      }
+    },
+    {
+      "seq": 3,
+      "job_id": "J0001",
+      "event": "duplicate",
+      "detail": {
+        "reason": "identical payload; original plan retained"
+      }
+    },
+    {
+      "seq": 4,
+      "job_id": "J0002",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0002",
+          "ready_s": 0,
+          "station_id": "S2"
+        }
+      }
+    },
+    {
+      "seq": 5,
+      "job_id": "J0002",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [],
+        "reason": "ready",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 40,
+          "job_id": "J0002",
+          "ready_s": 0,
+          "start_s": 0,
+          "station_id": "S2"
+        },
+        "wait_s": 0
+      }
+    },
+    {
+      "seq": 6,
+      "job_id": "J0003",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0003",
+          "ready_s": 0,
+          "station_id": "S1"
+        }
+      }
+    },
+    {
+      "seq": 7,
+      "job_id": "J0003",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0001"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 80,
+          "job_id": "J0003",
+          "ready_s": 0,
+          "start_s": 40,
+          "station_id": "S1"
+        },
+        "wait_s": 40
+      }
+    },
+    {
+      "seq": 8,
+      "job_id": "J0004",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0004",
+          "ready_s": 0,
+          "station_id": "S2"
+        }
+      }
+    },
+    {
+      "seq": 9,
+      "job_id": "J0004",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0002"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 80,
+          "job_id": "J0004",
+          "ready_s": 0,
+          "start_s": 40,
+          "station_id": "S2"
+        },
+        "wait_s": 40
+      }
+    },
+    {
+      "seq": 10,
+      "job_id": "J0005",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0005",
+          "ready_s": 0,
+          "station_id": "S1"
+        }
+      }
+    },
+    {
+      "seq": 11,
+      "job_id": "J0005",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0001",
+          "J0003"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 120,
+          "job_id": "J0005",
+          "ready_s": 0,
+          "start_s": 80,
+          "station_id": "S1"
+        },
+        "wait_s": 80
+      }
+    },
+    {
+      "seq": 12,
+      "job_id": "J0006",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0006",
+          "ready_s": 0,
+          "station_id": "S2"
+        }
+      }
+    },
+    {
+      "seq": 13,
+      "job_id": "J0006",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0002",
+          "J0004"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 120,
+          "job_id": "J0006",
+          "ready_s": 0,
+          "start_s": 80,
+          "station_id": "S2"
+        },
+        "wait_s": 80
+      }
+    },
+    {
+      "seq": 14,
+      "job_id": "J0007",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0007",
+          "ready_s": 0,
+          "station_id": "S1"
+        }
+      }
+    },
+    {
+      "seq": 15,
+      "job_id": "J0007",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0001",
+          "J0003",
+          "J0005"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 160,
+          "job_id": "J0007",
+          "ready_s": 0,
+          "start_s": 120,
+          "station_id": "S1"
+        },
+        "wait_s": 120
+      }
+    },
+    {
+      "seq": 16,
+      "job_id": "J0008",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0008",
+          "ready_s": 0,
+          "station_id": "S2"
+        }
+      }
+    },
+    {
+      "seq": 17,
+      "job_id": "J0008",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0002",
+          "J0004",
+          "J0006"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 160,
+          "job_id": "J0008",
+          "ready_s": 0,
+          "start_s": 120,
+          "station_id": "S2"
+        },
+        "wait_s": 120
+      }
+    },
+    {
+      "seq": 18,
+      "job_id": "J0009",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0009",
+          "ready_s": 0,
+          "station_id": "S1"
+        }
+      }
+    },
+    {
+      "seq": 19,
+      "job_id": "J0009",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0001",
+          "J0003",
+          "J0005",
+          "J0007"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 200,
+          "job_id": "J0009",
+          "ready_s": 0,
+          "start_s": 160,
+          "station_id": "S1"
+        },
+        "wait_s": 160
+      }
+    },
+    {
+      "seq": 20,
+      "job_id": "J0010",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0010",
+          "ready_s": 0,
+          "station_id": "S2"
+        }
+      }
+    },
+    {
+      "seq": 21,
+      "job_id": "J0010",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0002",
+          "J0004",
+          "J0006",
+          "J0008"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 200,
+          "job_id": "J0010",
+          "ready_s": 0,
+          "start_s": 160,
+          "station_id": "S2"
+        },
+        "wait_s": 160
+      }
+    },
+    {
+      "seq": 22,
+      "job_id": "J0011",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0011",
+          "ready_s": 0,
+          "station_id": "S1"
+        }
+      }
+    },
+    {
+      "seq": 23,
+      "job_id": "J0011",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0001",
+          "J0003",
+          "J0005",
+          "J0007",
+          "J0009"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 240,
+          "job_id": "J0011",
+          "ready_s": 0,
+          "start_s": 200,
+          "station_id": "S1"
+        },
+        "wait_s": 200
+      }
+    },
+    {
+      "seq": 24,
+      "job_id": "J0012",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0012",
+          "ready_s": 0,
+          "station_id": "S2"
+        }
+      }
+    },
+    {
+      "seq": 25,
+      "job_id": "J0012",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0002",
+          "J0004",
+          "J0006",
+          "J0008",
+          "J0010"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 240,
+          "job_id": "J0012",
+          "ready_s": 0,
+          "start_s": 200,
+          "station_id": "S2"
+        },
+        "wait_s": 200
+      }
+    },
+    {
+      "seq": 26,
+      "job_id": "J0013",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0013",
+          "ready_s": 0,
+          "station_id": "S1"
+        }
+      }
+    },
+    {
+      "seq": 27,
+      "job_id": "J0013",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0001",
+          "J0003",
+          "J0005",
+          "J0007",
+          "J0009",
+          "J0011"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 280,
+          "job_id": "J0013",
+          "ready_s": 0,
+          "start_s": 240,
+          "station_id": "S1"
+        },
+        "wait_s": 240
+      }
+    },
+    {
+      "seq": 28,
+      "job_id": "J0014",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0014",
+          "ready_s": 0,
+          "station_id": "S2"
+        }
+      }
+    },
+    {
+      "seq": 29,
+      "job_id": "J0014",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0002",
+          "J0004",
+          "J0006",
+          "J0008",
+          "J0010",
+          "J0012"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 280,
+          "job_id": "J0014",
+          "ready_s": 0,
+          "start_s": 240,
+          "station_id": "S2"
+        },
+        "wait_s": 240
+      }
+    },
+    {
+      "seq": 30,
+      "job_id": "J0015",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0015",
+          "ready_s": 0,
+          "station_id": "S1"
+        }
+      }
+    },
+    {
+      "seq": 31,
+      "job_id": "J0015",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0001",
+          "J0003",
+          "J0005",
+          "J0007",
+          "J0009",
+          "J0011",
+          "J0013"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 320,
+          "job_id": "J0015",
+          "ready_s": 0,
+          "start_s": 280,
+          "station_id": "S1"
+        },
+        "wait_s": 280
+      }
+    },
+    {
+      "seq": 32,
+      "job_id": "J0016",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0016",
+          "ready_s": 0,
+          "station_id": "S2"
+        }
+      }
+    },
+    {
+      "seq": 33,
+      "job_id": "J0016",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0002",
+          "J0004",
+          "J0006",
+          "J0008",
+          "J0010",
+          "J0012",
+          "J0014"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 320,
+          "job_id": "J0016",
+          "ready_s": 0,
+          "start_s": 280,
+          "station_id": "S2"
+        },
+        "wait_s": 280
+      }
+    },
+    {
+      "seq": 34,
+      "job_id": "J0017",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0017",
+          "ready_s": 0,
+          "station_id": "S1"
+        }
+      }
+    },
+    {
+      "seq": 35,
+      "job_id": "J0017",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0001",
+          "J0003",
+          "J0005",
+          "J0007",
+          "J0009",
+          "J0011",
+          "J0013",
+          "J0015"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 360,
+          "job_id": "J0017",
+          "ready_s": 0,
+          "start_s": 320,
+          "station_id": "S1"
+        },
+        "wait_s": 320
+      }
+    },
+    {
+      "seq": 36,
+      "job_id": "J0018",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0018",
+          "ready_s": 0,
+          "station_id": "S2"
+        }
+      }
+    },
+    {
+      "seq": 37,
+      "job_id": "J0018",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0002",
+          "J0004",
+          "J0006",
+          "J0008",
+          "J0010",
+          "J0012",
+          "J0014",
+          "J0016"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 360,
+          "job_id": "J0018",
+          "ready_s": 0,
+          "start_s": 320,
+          "station_id": "S2"
+        },
+        "wait_s": 320
+      }
+    },
+    {
+      "seq": 38,
+      "job_id": "J0019",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0019",
+          "ready_s": 0,
+          "station_id": "S1"
+        }
+      }
+    },
+    {
+      "seq": 39,
+      "job_id": "J0019",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0001",
+          "J0003",
+          "J0005",
+          "J0007",
+          "J0009",
+          "J0011",
+          "J0013",
+          "J0015",
+          "J0017"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 400,
+          "job_id": "J0019",
+          "ready_s": 0,
+          "start_s": 360,
+          "station_id": "S1"
+        },
+        "wait_s": 360
+      }
+    },
+    {
+      "seq": 40,
+      "job_id": "J0020",
+      "event": "accepted",
+      "detail": {
+        "payload": {
+          "job_id": "J0020",
+          "ready_s": 0,
+          "station_id": "S2"
+        }
+      }
+    },
+    {
+      "seq": 41,
+      "job_id": "J0020",
+      "event": "planned",
+      "detail": {
+        "blocking_job_ids": [
+          "J0002",
+          "J0004",
+          "J0006",
+          "J0008",
+          "J0010",
+          "J0012",
+          "J0014",
+          "J0016",
+          "J0018"
+        ],
+        "reason": "station_reservations",
+        "record_kind": "virtual_plan",
+        "run": {
+          "end_s": 400,
+          "job_id": "J0020",
+          "ready_s": 0,
+          "start_s": 360,
+          "station_id": "S2"
+        },
+        "wait_s": 360
+      }
+    }
+  ],
+  "metrics": {
+    "planned_count": 20,
+    "simulated_completed_count": 20,
+    "at_s": 3600,
+    "event_counts": {
+      "accepted": 20,
+      "planned": 20,
+      "duplicate": 1
+    }
+  }
+}
