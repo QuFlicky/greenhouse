@@ -1,0 +1,7 @@
+[
+  {"op":"submit","job":{"job_id":"J0001","station_id":"S1","ready_s":0}},
+  {"op":"submit","job":{"job_id":"J0001","station_id":"S1","ready_s":0}},
+  {"op":"submit","job":{"job_id":"J0001","station_id":"S1","ready_s":9}},
+  {"op":"get","job_id":"J0001","at_s":40},
+  {"op":"report","at_s":3600}
+]

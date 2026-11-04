@@ -1,0 +1,14 @@
+# Candidate-local files
+*.db
+*.sqlite
+*.sqlite3
+*.log
+__pycache__/
+*.pyc
+.DS_Store
+
+# Do not commit credentials or private material
+.env
+*.pem
+*.key
+secrets.*
